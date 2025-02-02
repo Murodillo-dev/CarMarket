@@ -12,14 +12,14 @@ export const Container = styled.div`
 `;
 export const Wrapper = styled.div`
   max-width: 900px;
-  height: 600px;
+  height: auto;
   border-radius: 15px;
   background-color: white;
   margin: auto;
   overflow: auto;
   padding: 24px 32px 24px 32px;
   margin-top: 85px;
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     width: 0;
   }
 `;
@@ -31,6 +31,7 @@ export const WrapperTop = styled.div`
 export const WrapperBody = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 30px;
   margin-top: 25px;
 `;
@@ -39,8 +40,8 @@ export const WrapperRight = styled.div``;
 export const Exit = styled(exit)``;
 
 export const Footer = styled.div`
-width: 100%;
-display: flex;
-justify-content: flex-end;
-margin-top: 40px;
-`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+`;

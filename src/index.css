@@ -8,4 +8,8 @@
 body {
   font-family: "Inter", serif;
   font-weight: 600;
+  overflow: hidden;
+}
+textarea{
+  resize: none;
 }

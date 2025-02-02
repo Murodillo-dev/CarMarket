@@ -11,7 +11,7 @@ const Sidebar = () => {
         <Route path="/" element={<Root />}>
           {side.map((value) => {
             const Element = value.element;
-            return <Route path={value.path} element={<Element />}></Route>;
+            return <Route key={value.id} path={value.path} element={<Element />}></Route>;
           })}
         </Route>
       </Routes>

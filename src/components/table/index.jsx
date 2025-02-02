@@ -71,14 +71,14 @@ export default function CarTable(props) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(6);
     const [rows, setRows] = React.useState([]);
-    
+
     const location = useLocation()
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
 
-   
+
     React.useEffect(() => {
         axios.get("https://www.freetestapi.com/api/v1/cars").then((res) => {
             setRows(res.data);
@@ -94,7 +94,6 @@ export default function CarTable(props) {
                 </Path>
                 <Action>
                     {props.children}
-
                 </Action>
             </Table>
             <TableContainer sx={{ maxHeight: 500, border: "none", borderRadius: 2 }}>
@@ -121,7 +120,7 @@ export default function CarTable(props) {
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                                         <TableCell
                                             sx={{ fontWeight: 600, fontSize: 13, color: "#1A1D1F" }}
                                         >

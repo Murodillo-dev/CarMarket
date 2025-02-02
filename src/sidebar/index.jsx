@@ -3,13 +3,11 @@ import { Container } from "./style";
 import { side } from "../utils/sidebar";
 import { Route, Routes } from "react-router-dom";
 import Root from "../root";
-import MainPage from "../pages/main";
 
 const Sidebar = () => {
   return (
     <Container>
       <Routes>
-        <Route path="/" element={<MainPage/>}/>
         <Route path="/" element={<Root />}>
           {side.map((value) => {
             const Element = value.element;

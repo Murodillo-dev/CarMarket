@@ -90,7 +90,7 @@ export default function CarTable(props) {
             <Table sx={{ display: 'flex', gap: 4, justifyContent: 'space-between', alignItems: 'center', paddingTop: 2, paddingBottom: 4, paddingLeft: 1, paddingRight: 1 }}>
                 <Path>
                     <Box />
-                    {location.pathname.toUpperCase().slice(1)}
+                    {location.pathname.toUpperCase().slice(1) || 'ASOSIY'}
                 </Path>
                 <Action>
                     {props.children}

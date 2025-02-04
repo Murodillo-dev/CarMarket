@@ -85,33 +85,44 @@ const ModalCard = (props) => {
             formData.append("images", image);
         }
 
-        try {
-            const response = await axios.post(
-                `https://cars-1-pku7.onrender.com/add_car`,
-                formData,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            );
-            toast.success("Yangi mashina qo'shildi")
-        } catch (error) {
-            console.error("Xatolik yuz berdi:", error.response ? error.response.data : error.message);
+        if (year > 0 && distance > 0 && price > 0 && engine > 0) {
+            try {
+                const response = await axios.post(
+                    `https://cars-1-pku7.onrender.com/add_car`,
+                    formData,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }
+                );
+                toast.success("Yangi mashina qo'shildi",{
+                    autoClose:1500
+                })
+            } catch (error) {
+                console.error("Xatolik yuz berdi:", error.response ? error.response.data : error.message);
+            }
+
+            categoryRef.current.value = "";
+            modelRef.current.value = "";
+            priceRef.current.value = "";
+            engineRef.current.value = "";
+            yearRef.current.value = "";
+            colorRef.current.value = "";
+            distanceRef.current.value = "";
+            descriptionRef.current.value = "";
+            tintingRef.current.value = "";
+            imagesRef.current.value = "";
+            setCount(count + 1)
+        }
+        else {
+            toast.error("manfiy qiymat kiritish mumkin emas",{
+                autoClose:1500
+            })
         }
 
-        categoryRef.current.value = "";
-        modelRef.current.value = "";
-        priceRef.current.value = "";
-        engineRef.current.value = "";
-        yearRef.current.value = "";
-        colorRef.current.value = "";
-        distanceRef.current.value = "";
-        descriptionRef.current.value = "";
-        tintingRef.current.value = "";
-        imagesRef.current.value = "";
-        setCount(count + 1)
+
     };
 
     return props.status

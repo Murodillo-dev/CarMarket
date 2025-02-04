@@ -12,11 +12,10 @@ import GenericButton from "../Generic/button";
 import { Action, Box, Path, Plus } from "./style";
 import { useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
-import MultipleSelect from "../Generic/select";
-import { Delete, PlusOne } from "@mui/icons-material";
+import { Delete } from "@mui/icons-material";
 import { toast, ToastContainer } from "react-toastify";
 import { CountContext } from "../updateContext";
-import Title from "../Generic/title";
+import AlertDialog from "../deleteButton";
 const columns = [
     { id: "#", label: "#" },
     { id: "markasi", label: "Markasi", minWidth: 150 },
@@ -70,12 +69,12 @@ export default function CarTable(props) {
     const [rowsPerPage, setRowsPerPage] = React.useState(6);
     const [rows, setRows] = React.useState([]);
     const [categories, setCategories] = React.useState([]);
-    const [type, setType] = React.useState('chevrolet');
+    const [type, setType] = React.useState();
     const { count, setCount } = React.useContext(CountContext)
     const [typeId, setTypeId] = React.useState('')
-
     const location = useLocation();
-    const first = String(categories[0]?.brand)
+    const selectedCategory = type ? type : categories[0]?.brand
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -88,28 +87,20 @@ export default function CarTable(props) {
 
 
     React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const categoriesResponse = await axios.get("https://cars-1-pku7.onrender.com/categories", config);
+                setCategories(categoriesResponse.data);
 
-        axios
-            .get("https://cars-1-pku7.onrender.com/categories", config)
-            .then((res) => {
-                setCategories(res.data);
-            })
-            .catch((err) => {
-                console.error("Error fetching cars:", err);
-            });
 
-        axios
-            .get(
-                `https://cars-1-pku7.onrender.com/categories/${type}`,
-                config
-            )
-            .then((res) => {
-                setRows(res.data);
-            })
-            .catch((err) => {
-                console.error("Error fetching cars:", err);
-            });
+                const rowsResponse = await axios.get(`https://cars-1-pku7.onrender.com/categories/${type ? type : categoriesResponse.data[0]?.brand}`, config);
+                setRows(rowsResponse.data);
+            } catch (err) {
+                console.error("Error fetching data:", err);
+            }
+        };
 
+        fetchData();
     }, [type, count]);
 
 
@@ -124,29 +115,12 @@ export default function CarTable(props) {
                 setCount(count + 1)
             })
             .then(() => {
-                toast.success("Malumot o'chirib tashlandi")
+                toast.success("Malumot o'chirib tashlandi",{
+                    autoClose:1500
+                })
             })
-
     }
-    const selectedCategory = type
-    const deleteCategory = () => {
-        for (const item of categories) {
-            if (item.brand === selectedCategory) {
-                axios
-                    .delete(`https://cars-1-pku7.onrender.com/delete_category/${item._id}`, config)
-                    .then(() => {
-                        setCount(count + 1)
-                    })
-                    .then(() => {
-                        toast.success("Malumot o'chirib tashlandi")
-                    })
 
-            }
-
-        }
-
-    }
-    console.log(rows);
 
     return (
         <Paper sx={{ width: "100%", border: "none", borderRadius: 2 }}>
@@ -156,9 +130,7 @@ export default function CarTable(props) {
                     {location.pathname.toUpperCase().slice(6) || "ASOSIY"}
                 </Path>
                 <Action>
-                    <GenericButton onClick={deleteCategory} bg='red' size={17}>
-                        {selectedCategory} <Delete sx={{ fontSize: 28 }} />
-                    </GenericButton >
+                    <AlertDialog carCategories={categories} selectedCarCategory={selectedCategory} />
                     <select onChange={changeHandler} style={selectStyle}>
                         {categories.map((value) => {
                             return (
@@ -204,7 +176,7 @@ export default function CarTable(props) {
                                         <TableCell
                                             sx={{ fontWeight: 600, fontSize: 15, color: "#1A1D1F" }}
                                         >
-                                            {type.toUpperCase()}
+                                            {type ? type.toUpperCase() : categories[0]?.brand}
                                         </TableCell>
                                         <TableCell
                                             sx={{ fontWeight: 600, fontSize: 15, color: "#1A1D1F" }}
@@ -249,7 +221,6 @@ export default function CarTable(props) {
                             })}
                     </TableBody>
                 </Table>
-                <ToastContainer />
             </TableContainer>
             <TablePagination
                 rowsPerPageOptions={[]}
@@ -259,6 +230,7 @@ export default function CarTable(props) {
                 sx={{ display: "flex", justifyContent: "center" }}
                 onPageChange={handleChangePage}
             />
+            <ToastContainer />
         </Paper>
     );
 }

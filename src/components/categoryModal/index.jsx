@@ -46,10 +46,14 @@ const ModalCategory = (props) => {
                 formData,
                 config
             );
-            toast.success("Yangi malumot qo'shildi")
+            toast.success("Yangi malumot qo'shildi", {
+                autoClose: 1500
+            })
         } catch (error) {
             console.error("Xatolik yuz berdi:", error.response ? error.response.data : error.message);
-            toast.error("Xatolik yuz berdi")
+            toast.error("Xatolik yuz berdi", {
+                autoClose: 1500
+            })
         }
 
         brandRef.current.value = '';

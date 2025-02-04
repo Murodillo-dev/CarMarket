@@ -3,6 +3,9 @@ import {
   Body,
   Container,
   Link,
+  MainIcon,
+  QuestionIcon,
+  StoreIcon,
   WrapperLeft,
   WrapperRight,
   WrapperTop,
@@ -14,9 +17,9 @@ const Root = () => {
   return (
     <Container>
       <WrapperLeft>
-        <Link to="asosiy">Asosiy</Link>
-        <Link to="asosiy">Asosiy</Link>
-        <Link to="asosiy">Asosiy</Link>
+        <Link to="asosiy"><MainIcon /> Asosiy</Link>
+        <Link to="elonlar"> <StoreIcon/> E'lonlar</Link>
+        <Link to="savollar"> <QuestionIcon /> Savollar</Link>
       </WrapperLeft>
 
       <WrapperRight>

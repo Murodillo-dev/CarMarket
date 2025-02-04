@@ -7,6 +7,7 @@ import LoginPage from "../pages/login";
 import Root from "../root";
 import MainPage from "../pages/main";
 import VerifyPage from "../pages/verify";
+import QuestionPage from "../pages/question";
 
 const Sidebar = () => {
   return (
@@ -17,8 +18,9 @@ const Sidebar = () => {
         <Route path="/" element={<RegisterPage />} />
         <Route path="/verify" element={<VerifyPage />} />
         <Route path="/root" element={<Root />} >
-          <Route path="/root" element={<MainPage />} />
           <Route path="asosiy" element={<MainPage />} />
+          <Route path="elonlar" element={<MainPage />} />
+          <Route path="savollar" element={<QuestionPage />} />
         </Route>
 
       </Routes>

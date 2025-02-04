@@ -11,10 +11,12 @@ import { createPortal } from "react-dom";
 import { Box, Path } from "../table/style";
 import Title from "../Generic/title";
 import GenericButton from "../Generic/button";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { TextField } from "@mui/material";
+import { toast } from "react-toastify";
+import { CountContext } from "../updateContext";
 
 const ModalCard = (props) => {
     const categoryRef = useRef('');
@@ -28,6 +30,7 @@ const ModalCard = (props) => {
     const tintingRef = useRef('');
     const imagesRef = useRef([]);
     const [types, setTypes] = useState([]);
+    const { count, setCount } = useContext(CountContext)
 
     const token = Cookies.get("token");
     const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
@@ -41,7 +44,7 @@ const ModalCard = (props) => {
             .catch((err) => {
                 console.error("Error fetching categories:", err);
             });
-    }, []);
+    }, [count]);
 
     const saveHandler = async () => {
         const model = modelRef.current.value;
@@ -56,13 +59,13 @@ const ModalCard = (props) => {
         const images = imagesRef.current.files;
 
         if (!model || !tinting || !engine || !color || !year || !distance || !price || !category || !description || images.length === 0) {
-            alert("Barcha maydonlarni to'ldiring!");
+            toast.error("Barcha maydonlarni to'ldiring!");
             return;
         }
 
         const selectedCategory = types.find(cat => cat.brand === category);
         if (!selectedCategory) {
-            alert("Kategoriya topilmadi!");
+            toast.error("Kategoriya topilmadi!");
             return;
         }
 
@@ -93,11 +96,22 @@ const ModalCard = (props) => {
                     },
                 }
             );
-            console.log("Muvaffaqiyatli qo‘shildi:", response.data);
-            props.onClose();
+            toast.success("Yangi mashina qo'shildi")
         } catch (error) {
             console.error("Xatolik yuz berdi:", error.response ? error.response.data : error.message);
         }
+
+        categoryRef.current.value = "";
+        modelRef.current.value = "";
+        priceRef.current.value = "";
+        engineRef.current.value = "";
+        yearRef.current.value = "";
+        colorRef.current.value = "";
+        distanceRef.current.value = "";
+        descriptionRef.current.value = "";
+        tintingRef.current.value = "";
+        imagesRef.current.value = "";
+        setCount(count + 1)
     };
 
     return props.status

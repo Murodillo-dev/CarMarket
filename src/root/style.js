@@ -1,5 +1,8 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import main from '../assets/icons/main.svg?react'
+import question from '../assets/icons/question.svg?react'
+import store from '../assets/icons/store.svg?react'
 
 export const Container = styled.div`
   display: flex;
@@ -34,7 +37,7 @@ export const Link = styled(NavLink)`
   padding: 10px 0;
   text-decoration: none;
   color: #6f767e;
-  font-size: 15px;
+  font-size: 17px;
 `;
 
 export const Body = styled.div`
@@ -42,3 +45,7 @@ export const Body = styled.div`
   height: 88vh;
   background-color: rgb(228, 228, 228);
 `;
+
+export const MainIcon = styled(main)``
+export const QuestionIcon = styled(question)``
+export const StoreIcon = styled(store)``

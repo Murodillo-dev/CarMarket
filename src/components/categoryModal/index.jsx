@@ -3,12 +3,15 @@ import { createPortal } from 'react-dom';
 import { Box, Path } from '../table/style';
 import Title from '../Generic/title';
 import GenericButton from '../Generic/button';
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { TextField } from '@mui/material';
+import { toast } from 'react-toastify';
+import { CountContext } from '../updateContext';
 
 const ModalCategory = (props) => {
+    const { count, setCount } = useContext(CountContext)
     const brandRef = useRef(null);
     const fileRef = useRef(null);
 
@@ -43,11 +46,17 @@ const ModalCategory = (props) => {
                 formData,
                 config
             );
-            console.log("Muvaffaqiyatli qo‘shildi:", response.data);
-            props.onClose();
+            toast.success("Yangi malumot qo'shildi")
         } catch (error) {
             console.error("Xatolik yuz berdi:", error.response ? error.response.data : error.message);
+            toast.error("Xatolik yuz berdi")
         }
+
+        brandRef.current.value = '';
+        fileRef.current.value = '';
+
+        setCount(count - 1)
+
     };
 
     return (

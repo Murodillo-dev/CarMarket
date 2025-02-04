@@ -32,8 +32,8 @@ const MainPage = (props) => {
         <GenericButton onClick={closeCategory} borderRadius={50} width={36} height={36} bg='#EFEFEF'><Exit /></GenericButton>
       </ModalCategory>
       <CarTable >
-        <GenericButton onClick={openCategory}> <Plus /> Kategoriya qo’shish</GenericButton>
-        <GenericButton onClick={openHandler}> <Plus /> Mashina qo’shish</GenericButton>
+        <GenericButton size={16} onClick={openCategory}> <Plus /> Kategoriya qo’shish</GenericButton>
+        <GenericButton size={16} onClick={openHandler}> <Plus /> Mashina qo’shish</GenericButton>
       </CarTable>
     </Container>
   );

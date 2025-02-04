@@ -27,7 +27,7 @@ function getStyles(name, personName, theme) {
     };
 }
 
-export default function MultipleSelect({ names }) {
+export default function MultipleSelect({ names, width, size }) {
     const theme = useTheme();
     const [personName, setPersonName] = React.useState([]);
 
@@ -43,19 +43,19 @@ export default function MultipleSelect({ names }) {
     return (
         <div>
             <FormControl focused={false} sx={{
-                m: 0, width: 400, border: "none",
+                m: 0, width: width ? width : 400, height: 40, border: "none",
                 "& fieldset": { border: "none" }, backgroundColor: '#F4F4F4', borderRadius: 2
             }}>
                 <Select
-                    size='small'
+                    size={size ? size : 'small'}
+                    sx={{ height: 40 }}
                     value={personName}
                     onChange={handleChange}
                     MenuProps={MenuProps}
                     displayEmpty
-                    selected={names[0].title}
+                // selected={names[0].brand}
                 >
                     <MenuItem value="" disabled>
-                        {/* {names[0]?.title} */}
                         Tanlang
                     </MenuItem>
                     {names?.map((item) => (
@@ -65,7 +65,7 @@ export default function MultipleSelect({ names }) {
                             value={item.value}
                             style={getStyles(item.title, personName, theme)}
                         >
-                            {item.title}
+                            {item.brand}
                         </MenuItem>
                     ))}
                 </Select>

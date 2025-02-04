@@ -6,9 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import Sidebar from "./sidebar";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
     <BrowserRouter>
       <Sidebar />
     </BrowserRouter>
-  </StrictMode>
 );

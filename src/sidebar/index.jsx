@@ -1,21 +1,26 @@
 import React from "react";
 import { Container } from "./style";
-import { side } from "../utils/sidebar";
 import { Route, Routes } from "react-router-dom";
+
+import RegisterPage from "../pages/register";
+import LoginPage from "../pages/login";
 import Root from "../root";
 import MainPage from "../pages/main";
+import VerifyPage from "../pages/verify";
 
 const Sidebar = () => {
   return (
     <Container>
       <Routes>
-        <Route path="/" element={<Root />}>
-        <Route path="/" element={<MainPage/>}/>
-          {side.map((value) => {
-            const Element = value.element;
-            return <Route key={value.id} path={value.path} element={<Element />}></Route>;
-          })}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/" element={<RegisterPage />} />
+        <Route path="/verify" element={<VerifyPage />} />
+        <Route path="/root" element={<Root />} >
+          <Route path="/root" element={<MainPage />} />
+          <Route path="asosiy" element={<MainPage />} />
         </Route>
+
       </Routes>
     </Container>
   );

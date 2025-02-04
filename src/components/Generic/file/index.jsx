@@ -8,7 +8,6 @@ const CustomFileInput = () => {
             type='file'
             sx={{ m: 0, width: '400px', "& fieldset": { border: 'none' }, backgroundColor: '#F4F4F4', borderRadius: 2 }}
             size='small'
-
             slotProps={{
                 input: {
                     startAdornment: <InputAdornment position="start"><Camera /></InputAdornment>,

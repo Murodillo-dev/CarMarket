@@ -8,7 +8,7 @@ export const WrapperLeft = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
-  width: 15%;
+  width: 20%;
   height: 100vh;
   background-color: white;
   padding-left: 36px;
@@ -16,7 +16,7 @@ export const WrapperLeft = styled.div`
 `;
 
 export const WrapperRight = styled.div`
-  width: 85%;
+  width: 80%;
   height: 100vh;
 `;
 

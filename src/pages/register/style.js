@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -8,4 +9,19 @@ justify-content: center;
 align-items: center;
 flex-direction: column;
 gap: 20px;
+`
+export const Wrapper = styled.div`
+display: flex;
+justify-content:center;
+align-items:center;
+gap:20px;
+`
+export const Link = styled(NavLink)`
+text-decoration:none;
+display: flex;
+justify-content:center;
+align-items:center;
+width: 100%;
+height: 100%;
+color:white
 `

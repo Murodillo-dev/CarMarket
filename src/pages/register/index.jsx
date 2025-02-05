@@ -1,9 +1,19 @@
 import React, { useState } from "react";
-import { Container } from "./style";
-import { Button, Input } from "@mui/material";
+import { Container, Link, Wrapper } from "./style";
+import {
+  Button,
+  FormControl,
+  IconButton,
+  Input,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+} from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import GenericButton from "../../components/Generic/button";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -13,6 +23,8 @@ const RegisterPage = () => {
     password: "",
     role: "",
   });
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,7 +35,6 @@ const RegisterPage = () => {
       .post("https://cars-1-pku7.onrender.com/register", formData)
       .then((res) => {
         console.log("Success:", res.data);
-        // toast.success("Emailni tekshiring kod jonatildi", { autoClose: 1500 })
         navigate("/verify");
       })
       .catch((err) => {
@@ -34,22 +45,66 @@ const RegisterPage = () => {
 
   return (
     <Container>
-      <Input name="username" placeholder="User name" onChange={handleChange} />
-      <Input
-        name="email"
-        placeholder="Email"
-        type="email"
-        onChange={handleChange}
-      />
-      <Input
-        name="password"
-        placeholder="Password"
-        type="password"
-        onChange={handleChange}
-      />
-      <Input name="role" placeholder="Role" onChange={handleChange} />
-      <Button onClick={registerHandler}>Register</Button>
-      <NavLink to="/login">Login</NavLink>
+      <FormControl sx={{ m: 1, width: "350px" }} variant="outlined">
+        <OutlinedInput
+          type="text"
+          name="username"
+          placeholder="User name"
+          size="small"
+          onChange={handleChange}
+        />
+      </FormControl>
+
+      <FormControl sx={{ m: 1, width: "350px" }} variant="outlined">
+        <OutlinedInput
+          type="email"
+          name="email"
+          placeholder="Email"
+          size="small"
+          onChange={handleChange}
+        />
+      </FormControl>
+
+      <FormControl sx={{ m: 1, width: "350px" }} variant="outlined">
+        <OutlinedInput
+          name="password"
+          size="small"
+          placeholder="Password"
+          onChange={handleChange}
+          type={showPassword ? "text" : "password"}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label={
+                  showPassword ? "hide the password" : "display the password"
+                }
+                onClick={handleClickShowPassword}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+      </FormControl>
+
+      <FormControl sx={{ m: 1, width: "350px" }} variant="outlined">
+        <OutlinedInput
+          type="role"
+          name="Role"
+          placeholder="Role"
+          size="small"
+          onChange={handleChange}
+        />
+      </FormControl>
+      <Wrapper>
+        <GenericButton width={165} onClick={registerHandler}>
+          Sign Up
+        </GenericButton>
+        <GenericButton width={165}>
+          <Link to="/login">Sign In</Link>
+        </GenericButton>
+      </Wrapper>
     </Container>
   );
 };

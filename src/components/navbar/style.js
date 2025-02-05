@@ -20,7 +20,7 @@ export const WrapperRight = styled.div`
 `;
 
 export const UserIcon = styled(user)`
-  margin-right: 8px;
+  /* margin-right: 8px; */
 `;
 export const NofityOn = styled(notifyOn)`
   cursor: pointer;

@@ -7,5 +7,5 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
-gap: 20px;
+gap: 5px;
 `

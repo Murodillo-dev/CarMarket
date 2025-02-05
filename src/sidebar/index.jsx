@@ -13,9 +13,8 @@ const Sidebar = () => {
   return (
     <Container>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/" element={<RegisterPage />} />
         <Route path="/verify" element={<VerifyPage />} />
         <Route path="/root" element={<Root />} >
           <Route path="/root" element={<MainPage />} />

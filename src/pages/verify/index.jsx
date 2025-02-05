@@ -1,62 +1,100 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Container } from "./style";
-import { Button, FormControl, Input, OutlinedInput } from "@mui/material";
-import { NavLink, useNavigate } from "react-router-dom";
+import { FormControl, InputLabel, OutlinedInput } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
-import { Link, Wrapper } from "../register/style";
+import { Link, Span, Wrapper } from "../register/style";
 import GenericButton from "../../components/Generic/button";
+import { useForm } from "react-hook-form";
+import Title from "../../components/Generic/title";
+import LoadingBtn from "../../components/loading";
+import { toast, ToastContainer } from "react-toastify";
 
 const VerifyPage = () => {
   const navigate = useNavigate();
-  const codeRef = useRef(null);
-  const emailRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const verifyHandler = () => {
-    const formData = {
-      code: codeRef.current.value,
-      email: emailRef.current.value,
-    };
+  const verifyHandler = (formData) => {
+    setIsLoading(true);
     axios
       .post("https://cars-1-pku7.onrender.com/verify", formData)
       .then((res) => {
-        console.log("Success:", res.data);
-        navigate("/root");
+        console.log("Success:", res);
+        navigate("/");
       })
       .catch((err) => {
         console.error("API Error:", err);
+        setIsLoading(false);
+        toast.error("Something went wrong", {
+          autoClose: 1500,
+          position: "top-center",
+        });
       });
   };
 
   return (
-    <Container>
-      <FormControl sx={{ m: 1, width: "350px" }} variant="outlined">
-        <OutlinedInput
-          type="number"
-          placeholder="Code"
+    <form onSubmit={handleSubmit(verifyHandler)}>
+      <Container>
+        <Title size={50} mb={50}>Verification page</Title>
+        <FormControl
+          sx={{ m: 1, width: "350px", height: 65 }}
+          variant="outlined"
           size="small"
-          inputRef={codeRef}
-        />
-      </FormControl>
+        >
+          <InputLabel id="email-label">Email</InputLabel>
+          <OutlinedInput
+            id="email-label"
+            labelId="email-label"
+            label="Email"
+            type="email"
+            size="small"
+            {...register("email", { required: "Email is required" })}
+          />
+          {errors.email && (
+            <Title mt={8} size={12} color="red">
+              {errors.email.message}
+            </Title>
+          )}
+        </FormControl>
 
-      <FormControl sx={{ m: 1, width: "350px" }} variant="outlined">
-        <OutlinedInput
-          type="email"
-          placeholder="Email"
+        <FormControl
+          sx={{ m: 1, width: "350px", height: 65 }}
+          variant="outlined"
           size="small"
-          inputRef={emailRef}
-        />
-      </FormControl>
+        >
+          <InputLabel id="code-label">Code</InputLabel>
+          <OutlinedInput
+            labelId="code-label"
+            id="code-label"
+            label="Code"
+            type="number"
+            size="small"
+            {...register("code", { required: "Code is reqiured" })}
+          />
+          {errors.code && (
+            <Title mt={8} size={12} color="red">
+              {errors.code.message}
+            </Title>
+          )}
+        </FormControl>
 
-      <Wrapper>
-        <GenericButton width={165}>
-          <Link to="/register">Sign Up</Link>
-        </GenericButton>
-        <GenericButton width={165} onClick={verifyHandler}>
-          Verify
-        </GenericButton>
-      </Wrapper>
-    </Container>
+        <Wrapper>
+          {isLoading ? (
+            <LoadingBtn />
+          ) : (
+            <GenericButton width={350} type="submit">
+              Verify
+            </GenericButton>
+          )}
+        </Wrapper>
+        <ToastContainer />
+      </Container>
+    </form>
   );
 };
 

@@ -53,16 +53,13 @@ const LoginPage = () => {
           });
           navigate("/root");
         } else {
+          setIsLoading(false);
           toast.error("Email va Parol xato kiritilgan", {
             position: "top-center",
           });
         }
       } catch (err) {
-        setIsLoading(false);
         console.error("API Error:", err);
-        toast.error("Email va Parol xato kiritilgan", {
-          position: "top-center",
-        });
       }
     } else {
       setEmail("Email is required");
@@ -72,6 +69,7 @@ const LoginPage = () => {
 
   return (
     <Container>
+       <Title size={50} mb={50}>Login page</Title>
       <FormControl sx={{ m: 1, width: "350px", height: 65 }} variant="outlined">
         <InputLabel id="user-label" size="small">
           Email

@@ -18,7 +18,7 @@ const Root = () => {
     <Container>
       <WrapperLeft>
         <Link to="asosiy"><MainIcon /> Asosiy</Link>
-        <Link to="elonlar"> <StoreIcon/> E'lonlar</Link>
+        <Link to="e'lonlar"> <StoreIcon/> E'lonlar</Link>
         <Link to="savollar"> <QuestionIcon /> Savollar</Link>
       </WrapperLeft>
 

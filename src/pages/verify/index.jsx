@@ -3,6 +3,7 @@ import { Container } from './style';
 import { Button, Input } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const VerifyPage = () => {
     const navigate = useNavigate();
@@ -14,6 +15,8 @@ const VerifyPage = () => {
             code: codeRef.current.value,
             email: emailRef.current.value,
         };
+        // const token = Cookies.get('refreshToken')
+        // const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {}
 
         axios.post('https://cars-1-pku7.onrender.com/verify', formData)
             .then((res) => {
